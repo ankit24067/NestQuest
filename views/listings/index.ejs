@@ -1,0 +1,181 @@
+<% layout("layouts/boilerplate") %>
+<script>
+   let listings = <%- JSON.stringify(allListings) %>;
+</script>
+
+<style>
+   #filters {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: nowrap; /* Make it a single row */
+      align-items: center;
+      overflow-x: auto; /* Enable horizontal scroll on small screens */
+      -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+      scrollbar-width: none; /* Hide scrollbar on Firefox */
+   }
+
+   #filters::-webkit-scrollbar {
+      display: none; /* Hide scrollbar on Chrome/Safari */
+   }
+
+   #filterApply {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+   }
+
+   .filter {
+      text-align: center;
+      margin-right: 2rem;
+      margin-top: 2rem;
+      opacity: 0.7;
+      flex: 0 0 auto; /* Prevent shrinking in scroll row */
+   }
+
+   .filter:hover {
+      opacity: 1;
+      cursor: pointer;
+   }
+
+   .filter.active {
+      opacity: 1;
+      font-weight: bold;
+      border-bottom: 2px solid black;
+   }
+
+   .filter p {
+      font-size: 0.8rem;
+   }
+
+   .tax-info {
+      display: none;
+   }
+
+   .tax-toggle {
+      border: 1px solid black;
+      border-radius: 1rem;
+      height: 3.25rem;
+      padding: 1rem;
+      margin-left: 2rem;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0; /* Prevent the toggle from shrinking */
+      white-space: nowrap; /* Keep label from breaking */
+   }
+</style>
+
+
+<div id="filters">
+   <div id="filterApply">
+      <div class="filter" data-category="all">
+         <div><i class="fa-solid fa-border-all"></i></div>
+         <p>All</p>
+      </div>
+      <div class="filter" data-category="trending">
+         <div><i class="fa-solid fa-fire"></i></div>
+         <p>Trending</p>
+      </div>
+      <div class="filter" data-category="rooms">
+         <div><i class="fa-solid fa-bed"></i></div>
+         <p>Rooms</p>
+      </div>
+      <div class="filter" data-category="iconic-cities">
+         <div><i class="fa-solid fa-mountain-city"></i></div>
+         <p>Iconic Cities</p>
+      </div>
+      <div class="filter" data-category="mountains">
+         <div><i class="fa-solid fa-mountain"></i></div>
+         <p>Mountains</p>
+      </div>
+      <div class="filter" data-category="castles">
+         <div><i class="fa-brands fa-fort-awesome"></i></div>
+         <p>Castles</p>
+      </div>
+      <div class="filter" data-category="amazing-pools">
+         <div><i class="fa-solid fa-person-swimming"></i></div>
+         <p>Amazing Pools</p>
+      </div>
+      <div class="filter" data-category="camping">
+         <div><i class="fa-solid fa-campground"></i></div>
+         <p>Camping</p>
+      </div>
+      <div class="filter" data-category="farms">
+         <div><i class="fa-solid fa-cow"></i></div>
+         <p>Farms</p>
+      </div>
+      <div class="filter" data-category="arctic">
+         <div><i class="fa-solid fa-snowflake"></i></div>
+         <p>Arctic</p>
+      </div>
+      <div class="filter" data-category="domes">
+         <div><i class="fa-solid fa-igloo"></i></div>
+         <p>Domes</p>
+      </div>
+      <div class="filter" data-category="boats">
+         <div><i class="fa-solid fa-ship"></i></div>
+         <p>Boats</p>
+      </div>
+   </div>
+   <div class="tax-toggle">
+      <div class="form-check-reverse form-switch">
+         <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+         <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
+      </div>
+   </div>
+</div>
+<div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-3 mt-3" id="listingGrid">
+   <% for (let listing of allListings) { %>
+      <a href="/listings/<%= listing._id %>" class="listing-link" data-category="<%= listing.category %>">
+         <div class="card col listing-card" style="width: 20rem;">
+            <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
+            <div class="card-img-overlay"></div>
+            <div class="card-body">
+               <p class="card-text">
+                  <b><%= listing.title %></b> <br>
+                  <% if (listing.price != null) { %>
+                     &#8377;<%= listing.price.toLocaleString("en-IN") %> / night <br>
+                     <i class="tax-info">&nbsp;+18% GST</i>
+                  <% } else { %>
+                     Price not available <br>
+                  <% } %>
+               </p>
+            </div>
+         </div>
+      </a>
+   <% } %>
+</div>
+
+<script>
+   let taxSwitch = document.getElementById("switchCheckDefault");
+   taxSwitch.addEventListener("click", () => {
+      let taxInfo = document.getElementsByClassName("tax-info");
+      for (let info of taxInfo) {
+         info.style.display = (info.style.display !== "inline") ? "inline" : "none";
+      }
+   });
+
+   // Category filtering logic
+const filters = document.querySelectorAll(".filter");
+const listingElements = document.querySelectorAll(".listing-link");
+
+filters.forEach(filter => {
+   filter.addEventListener("click", () => {
+      const selectedCategory = filter.getAttribute("data-category");
+
+      listingElements.forEach(listing => {
+         const listingCategory = listing.getAttribute("data-category");
+
+         if (selectedCategory === "all" || listingCategory === selectedCategory) {
+            listing.style.display = "block";
+         } else {
+            listing.style.display = "none";
+         }
+      });
+
+      // Active filter style
+      filters.forEach(f => f.classList.remove("active"));
+      filter.classList.add("active");
+   });
+});
+
+</script>

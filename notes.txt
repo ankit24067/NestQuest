@@ -1,0 +1,106 @@
+Handling Deletion:-
+using Mongoose Middleware
+
+We can use 2 middlewares:-
+Pre - run before the query is executed
+Post - run after the query is executed
+
+
+Miscellaneous:-
+
+Express Router:- Express routers are a way to your express application such that our primary app.js file does not become bloated.
+
+const router = express.Router() //creates new router
+
+
+Cookies:-
+ Web Cookies
+ HTTP cookies are small block of data created by a web server while a user is browsing a website and placed on the user's computer or other device by the users's web browser
+
+
+ Signed Cookies
+
+What is State :-
+Stateful Protocol :-  requires server to save the status and session information.
+
+eg - ftp
+
+Stateless Protocol:- does not require the server to retain the information or
+
+
+Express Session:-
+An attempt to make our session Stateful
+
+
+Connect-flash :- 
+The flash is a specific area of the session used for storing messages. Messages are written to the flash and cleared after being displayed to the user.
+
+
+Authentication :- process of identifying who someone is
+
+Authorization :- process of verifying what specific applications, files, and data a user has access to
+
+Storing Passwords :-
+We Never store the passwords as it is. We store their hashed form.
+
+password                                  how it is stored
+"helloworld"  ---> Hashing Function  ---> "93612hgqefresdghfkjk23y467887947683yhdfger12343f"
+
+
+Hashing :-
+For every input, there is a fixed output
+They are one-way functions, we can't get input from output
+For a different input, there is a different output but of same length
+
+Small changes in i put should bring large changes in output.
+
+Salting :- Password salting is a technique to protect
+passwords stored in databases by adding a string of 32 or more 
+characters and then hashing them.
+
+
+Passport package:-
+npm i Passport
+npm i passport-local-mongoose
+
+for using passport 
+ we have to configure the strategy
+
+ passport.initialize()
+ A middleware that initializes passport
+
+ passport.session()
+ A web application needs the ability to identify users as they broswe from page to page. the series of requests and responses, each associated with the same user, is known as a session.
+
+
+ passport.use(new LocalStrategy(User.Authenticate() ));
+
+ Connecting Login Route :-
+ How to check if a user is logged in?
+
+ req.isAuthenticated();   //passprot method
+ 
+ post-login Page 
+
+ whenever we have to send file we will have to use
+ attribute called
+
+enctype="multiplatform-data"
+multer - nodejs module for handling multipat/form-data
+
+
+Store Files:-
+Multer Store Cloudinary
+
+npm i cloudinary multer-storage-cloudinary
+
+
+Geo Coding
+Process of converting addresses into geographical coordinates (like latitude and longitude), which you can use to place markers on a map, or position the map ,...
+
+mongoose geojson
+
+ 
+
+
+
