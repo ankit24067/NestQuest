@@ -70,9 +70,9 @@ const sessionOptions = {
 
 };
 // 🏠 Root route
-// app.get("/", (req, res) => {
-//    res.send("Hi, I am root");
-// });
+app.get("/", (req, res) => {
+   res.redirect("/listings"); // or render a landing/home page
+});
 
 
 
